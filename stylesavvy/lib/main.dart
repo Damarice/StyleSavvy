@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
 
 void main() {
   runApp(FashionApp());
@@ -14,8 +15,8 @@ class FashionApp extends StatelessWidget {
         hintColor: Colors.grey,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: HomePage(),
       routes: {
+        '/': (context) => HomePage(),
         '/about': (context) => AboutUsPage(),
         '/contact': (context) => ContactPage(),
         '/fashion-styling': (context) => FashionStylingScreen(),
@@ -128,58 +129,138 @@ class FashionAppMenu extends StatelessWidget implements PreferredSizeWidget {
   }
 }
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final List<String> imagePaths = [
+    'assets/Background.jpeg',
+    'assets/Background1.jpeg',
+    'assets/Background2.jpeg',
+  ];
+  int currentIndex = 0;
+
+  Timer? timer;
+
+  @override
+  void initState() {
+    super.initState();
+    // Start the slideshow timer
+    startSlideshow();
+  }
+
+  @override
+  void dispose() {
+    // Cancel the timer when the widget is disposed
+    timer?.cancel();
+    super.dispose();
+  }
+
+  void startSlideshow() {
+    timer = Timer.periodic(Duration(seconds: 5), (Timer timer) {
+      if (currentIndex < imagePaths.length - 1) {
+        setState(() {
+          currentIndex++;
+        });
+      } else {
+        setState(() {
+          currentIndex = 0;
+        });
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: FashionAppMenu(),
-      body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/Background.jpeg'), // Replace with your image path
-            fit: BoxFit.cover,
+      body: Stack(
+        children: [
+          Opacity(
+            opacity: 0.8,
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.grey,
+              ),
+            ),
           ),
-        ),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/fashion-styling');
-                },
-                child: Text(
-                  'Fashion Style',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
+          PageView.builder(
+            itemCount: imagePaths.length,
+            itemBuilder: (context, index) {
+              return Container(
+                child: Image.asset(
+                  imagePaths[index],
+                  fit: BoxFit.cover,
+                ),
+              );
+            },
+            onPageChanged: (index) {
+              setState(() {
+                currentIndex = index;
+              });
+            },
+          ),
+          Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/fashion-styling');
+                  },
+                  child: Text(
+                    'Fashion Style',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-              ),
-              SizedBox(height: 16),
-              Container(
-                height: 10,
-                color: Colors.transparent,
-              ),
-              SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/shop');
-                },
-                child: Text(
-                  'Shop',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
+                SizedBox(height: 16),
+                Container(
+                  height: 10,
+                  color: Colors.transparent,
+                ),
+                SizedBox(height: 16),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/shop');
+                  },
+                  child: Text(
+                    'Shop',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
+          Positioned(
+            bottom: 20,
+            left: 0,
+            right: 0,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List.generate(imagePaths.length, (index) {
+                return Container(
+                  width: 10.0,
+                  height: 10.0,
+                  margin: EdgeInsets.symmetric(horizontal: 4.0),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: currentIndex == index ? Colors.white : Colors.grey,
+                  ),
+                );
+              }),
+            ),
+          ),
+        ],
       ),
     );
   }
 }
-
 
 class AboutUsPage extends StatelessWidget {
   @override
