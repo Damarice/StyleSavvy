@@ -10,6 +10,8 @@ dependencies:
   flutter_bloc: ^7.0.0
   http: ^0.13.0
   cached_network_image: ^3.0.0
+  chewie: ^2.0.0
+  video_player: ^2.1.0
 
 dev_dependencies:
   flutter_test:

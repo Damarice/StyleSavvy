@@ -47,6 +47,22 @@ class FashionAppMenu extends StatelessWidget implements PreferredSizeWidget {
       actions: [
         ElevatedButton(
           onPressed: () {
+            Navigator.pushNamed(context, '/');
+          },
+          style: ElevatedButton.styleFrom(
+            primary: Theme.of(context).primaryColor,
+            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          ),
+          child: Text(
+            'Home',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        SizedBox(width: 16),
+        ElevatedButton(
+          onPressed: () {
             Navigator.pushNamed(context, '/about');
           },
           style: ElevatedButton.styleFrom(
@@ -63,7 +79,12 @@ class FashionAppMenu extends StatelessWidget implements PreferredSizeWidget {
         SizedBox(width: 16),
         ElevatedButton(
           onPressed: () {
-            Navigator.pushNamed(context, '/contact');
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ContactPage(),
+              ),
+            );
           },
           style: ElevatedButton.styleFrom(
             primary: Theme.of(context).primaryColor,
@@ -256,6 +277,27 @@ class _HomePageState extends State<HomePage> {
               }),
             ),
           ),
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: Container(
+              padding: EdgeInsets.symmetric(vertical: 8.0),
+              color: Colors.black87,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    '  Copyright @2023; Designed by mywebbworks',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 12.0,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -269,8 +311,11 @@ class AboutUsPage extends StatelessWidget {
       appBar: FashionAppMenu(),
       body: Center(
         child: Text(
-          'This is the About Us page.',
-          style: TextStyle(fontSize: 20),
+          'About Us',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 24,
+          ),
         ),
       ),
     );
@@ -284,106 +329,108 @@ class ContactPage extends StatelessWidget {
       appBar: FashionAppMenu(),
       body: Center(
         child: Text(
-          'This is the Contact page.',
-          style: TextStyle(fontSize: 20),
+          'Contact',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 24,
+          ),
         ),
       ),
     );
   }
 }
 
-class FashionStylingScreen extends StatelessWidget {
+class FashionStylingScreen extends StatefulWidget {
+  @override
+  _FashionStylingScreenState createState() => _FashionStylingScreenState();
+}
+
+class _FashionStylingScreenState extends State<FashionStylingScreen> {
+  final List<Map<String, dynamic>> categories = [
+    {
+      'category': 'Official',
+      'subcategories': [],
+    },
+    {
+      'category': 'Casual',
+      'subcategories': [],
+    },
+    {
+      'category': 'Evening Dinner',
+      'subcategories': [],
+    },
+    {
+      'category': 'Events',
+      'subcategories': ['Wedding', 'Baby Shower', 'Graduation'],
+    },
+  ];
+
+  List<bool> _isExpandedList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _isExpandedList = List<bool>.filled(categories.length, false);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: FashionAppMenu(),
       body: Center(
-        child: Text(
-          'This is the Fashion Styling screen.',
-          style: TextStyle(fontSize: 20),
-        ),
-      ),
-    );
-  }
-}
-
-class ShoppingScreen extends StatefulWidget {
-  @override
-  _ShoppingScreenState createState() => _ShoppingScreenState();
-}
-
-class _ShoppingScreenState extends State<ShoppingScreen> {
-  String selectedCategory = 'Shop';
-
-  void selectCategory(String category) {
-    setState(() {
-      selectedCategory = category;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: FashionAppMenu(),
-      body: ListView.builder(
-        itemCount: 6,
-        itemBuilder: (context, index) {
-          final itemName = 'Item ${index + 1}';
-          return Card(
-            child: ListTile(
-              leading: Icon(Icons.shopping_bag),
-              title: Text(itemName),
-              subtitle: Text('Price: \$9.99'),
-              trailing: IconButton(
-                icon: Icon(Icons.add),
-                onPressed: () {
-                  // Add to cart functionality
-                },
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'Fashion Styling',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 24,
               ),
             ),
-          );
-        },
-      ),
-      drawer: Drawer(
-        child: ListView(
-          children: [
-            ListTile(
-              title: Text('Categories'),
-              subtitle: Text(selectedCategory),
-            ),
-            ListTile(
-              title: Text('Shop'),
-              onTap: () {
-                selectCategory('Shop');
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: Text('Earphones'),
-              onTap: () {
-                selectCategory('Earphones');
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: Text('Watches'),
-              onTap: () {
-                selectCategory('Watches');
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: Text('Clothing'),
-              onTap: () {
-                selectCategory('Clothing');
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: Text('Shoes'),
-              onTap: () {
-                selectCategory('Shoes');
-                Navigator.pop(context);
+            SizedBox(height: 16),
+            ListView.builder(
+              shrinkWrap: true,
+              itemCount: categories.length,
+              itemBuilder: (context, index) {
+                final category = categories[index]['category'];
+                final subcategories = categories[index]['subcategories'];
+
+                return ExpansionPanelList(
+                  elevation: 1,
+                  expandedHeaderPadding: EdgeInsets.zero,
+                  expansionCallback: (panelIndex, isExpanded) {
+                    setState(() {
+                      _isExpandedList[index] = !isExpanded;
+                    });
+                  },
+                  children: [
+                    ExpansionPanel(
+                      headerBuilder: (context, isExpanded) {
+                        return ListTile(
+                          title: Text(
+                            category,
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        );
+                      },
+                      body: Column(
+                        children: List.generate(subcategories.length, (subIndex) {
+                          final subcategory = subcategories[subIndex];
+
+                          return ListTile(
+                            title: Text(subcategory),
+                            onTap: () {
+                              Navigator.pushNamed(context, '/category',
+                                  arguments: {'category': subcategory});
+                            },
+                          );
+                        }),
+                      ),
+                      isExpanded: _isExpandedList[index],
+                    ),
+                  ],
+                );
               },
             ),
           ],
@@ -393,20 +440,211 @@ class _ShoppingScreenState extends State<ShoppingScreen> {
   }
 }
 
-class CategoryScreen extends StatelessWidget {
+
+
+class ShoppingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: FashionAppMenu(),
       body: Center(
-        child: Text(
-          'This is the Category screen.',
-          style: TextStyle(fontSize: 20),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'Shop',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 24,
+              ),
+            ),
+            SizedBox(height: 16),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/category', arguments: {'category': 'Earphones'});
+                    },
+                    style: ElevatedButton.styleFrom(
+                      primary: Theme.of(context).primaryColor,
+                      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    ),
+                    child: Text(
+                      'Earphones',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(width: 16),
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/category', arguments: {'category': 'Headphones'});
+                    },
+                    style: ElevatedButton.styleFrom(
+                      primary: Theme.of(context).primaryColor,
+                      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    ),
+                    child: Text(
+                      'Headphones',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 16),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/category', arguments: {'category': 'Airpods'});
+                    },
+                    style: ElevatedButton.styleFrom(
+                      primary: Theme.of(context).primaryColor,
+                      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    ),
+                    child: Text(
+                      'Airpods',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(width: 16),
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/category', arguments: {'category': 'Head Bands'});
+                    },
+                    style: ElevatedButton.styleFrom(
+                      primary: Theme.of(context).primaryColor,
+                      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    ),
+                    child: Text(
+                      'Head Bands',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );
   }
 }
+
+
+
+class CategoryScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+    String category = args?['category'] ?? '';
+
+    // Mock data for available earphones
+    List<Earphone> earphones = [
+      Earphone(
+        name: 'Earphone Model 1',
+        price: 1200,
+        currency: 'Ksh.',
+      ),
+      Earphone(
+        name: 'Earphone Model 2',
+        price: 1500,
+        currency: 'Ksh.',
+      ),
+      Earphone(
+        name: 'Earphone Model 3',
+        price: 1800,
+        currency: 'Ksh.',
+      ),
+      Earphone(
+        name: 'Earphone Model 4',
+        price: 2000,
+        currency: 'Ksh.',
+      ),
+    ];
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Category: $category'),
+      ),
+      body: ListView.builder(
+        itemCount: earphones.length,
+        itemBuilder: (context, index) {
+          final earphone = earphones[index];
+          return ListTile(
+            title: Text(earphone.name),
+            subtitle: Text('${earphone.currency} ${earphone.price.toStringAsFixed(2)}'),
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                IconButton(
+                  onPressed: () {
+                    // Perform an action when the user taps the star icon
+                  },
+                  icon: Icon(Icons.star),
+                ),
+                IconButton(
+                  onPressed: () {
+                    // Perform an action when the user taps the review icon
+                  },
+                  icon: Icon(Icons.rate_review),
+                ),
+              ],
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class Earphone {
+  final String name;
+  final double price;
+  final String currency;
+
+  Earphone({
+    required this.name,
+    required this.price,
+    required this.currency,
+  });
+}
+
+
+  Widget build(BuildContext context) {
+    final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+
+    String category = args?['category'] ?? '';
+
+    return Scaffold(
+      appBar: FashionAppMenu(),
+      body: Center(
+        child: Text(
+          'Category: $category',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 24,
+          ),
+        ),
+      ),
+    );
+  }
 
 class BlogPage extends StatelessWidget {
   @override
@@ -415,8 +653,11 @@ class BlogPage extends StatelessWidget {
       appBar: FashionAppMenu(),
       body: Center(
         child: Text(
-          'This is the Blog page.',
-          style: TextStyle(fontSize: 20),
+          'Blog',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 24,
+          ),
         ),
       ),
     );
@@ -430,8 +671,11 @@ class BookNowPage extends StatelessWidget {
       appBar: FashionAppMenu(),
       body: Center(
         child: Text(
-          'This is the Book Now page.',
-          style: TextStyle(fontSize: 20),
+          'Book Now',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 24,
+          ),
         ),
       ),
     );
@@ -445,8 +689,11 @@ class SignupPage extends StatelessWidget {
       appBar: FashionAppMenu(),
       body: Center(
         child: Text(
-          'This is the Signup page.',
-          style: TextStyle(fontSize: 20),
+          'Signup',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 24,
+          ),
         ),
       ),
     );
