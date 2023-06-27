@@ -1,6 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+
+import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+
 
 void main() {
   runApp(FashionApp());
@@ -311,17 +315,107 @@ class AboutUsPage extends StatelessWidget {
     return Scaffold(
       appBar: FashionAppMenu(),
       body: Center(
-        child: Text(
-          'About Us',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 24,
-          ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'About Us',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 24,
+              ),
+            ),
+            SizedBox(height: 16), // Add spacing between sections
+            Text(
+              'Mission Statement:',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
+            ),
+            Text(
+              'Write your mission statement here...',
+              style: TextStyle(
+                fontSize: 16,
+              ),
+            ),
+            SizedBox(height: 16),
+            Text(
+              'What We Do:',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
+            ),
+            Text(
+              'Explain what your company does and offers in more detail...',
+              style: TextStyle(
+                fontSize: 16,
+              ),
+            ),
+            SizedBox(height: 16),
+            Text(
+              'Company History:',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
+            ),
+            Text(
+              'Map out your company history...',
+              style: TextStyle(
+                fontSize: 16,
+              ),
+            ),
+            SizedBox(height: 16),
+            Text(
+              'Values:',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
+            ),
+            Text(
+              'Incorporate your company values...',
+              style: TextStyle(
+                fontSize: 16,
+              ),
+            ),
+            SizedBox(height: 16),
+            Text(
+              'Visual Elements:',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
+            ),
+            Text(
+              'Include visual elements...',
+              style: TextStyle(
+                fontSize: 16,
+              ),
+            ),
+            SizedBox(height: 16),
+            Text(
+              'What\'s Next:',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
+            ),
+            Text(
+              'Tell your users what to expect next...',
+              style: TextStyle(
+                fontSize: 16,
+              ),
+            ),
+          ],
         ),
       ),
     );
   }
 }
+
 
 class ContactPage extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -336,6 +430,7 @@ class ContactPage extends StatelessWidget {
       body: Padding(
         padding: EdgeInsets.all(16.0),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
               'Contact',
@@ -345,62 +440,61 @@ class ContactPage extends StatelessWidget {
               ),
             ),
             SizedBox(height: 16),
-            Form(
-              key: _formKey,
-              child: Column(
-                children: [
-                  TextFormField(
-                    controller: _nameController,
-                    decoration: InputDecoration(
-                      labelText: 'Name',
+            FractionallySizedBox(
+              widthFactor: 0.75,
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    TextFormField(
+                      controller: _nameController,
+                      decoration: InputDecoration(
+                        labelText: 'Name',
+                      ),
+                      validator: (value) {
+                        if (value?.isEmpty ?? true) {
+                          return 'Please enter your name';
+                        }
+                        return null;
+                      },
                     ),
-                    validator: (value) {
-  if (value?.isEmpty ?? true) {
-    return 'Please enter your name';
-  }
-  return null;
-},
-
-                  ),
-                  TextFormField(
-                    controller: _emailController,
-                    decoration: InputDecoration(
-                      labelText: 'Email',
+                    TextFormField(
+                      controller: _emailController,
+                      decoration: InputDecoration(
+                        labelText: 'Email',
+                      ),
+                      validator: (value) {
+                        if (value?.isEmpty ?? true) {
+                          return 'Please enter your email';
+                        }
+                        return null;
+                      },
                     ),
-                    validator: (value) {
-  if (value?.isEmpty ?? true) {
-    return 'Please enter your email';
-  }
-  return null;
-},
-
-                  ),
-                  TextFormField(
-                    controller: _messageController,
-                    maxLines: 5,
-                    decoration: InputDecoration(
-                      labelText: 'Message',
+                    TextFormField(
+                      controller: _messageController,
+                      maxLines: 5,
+                      decoration: InputDecoration(
+                        labelText: 'Message',
+                      ),
+                      validator: (value) {
+                        if (value?.isEmpty ?? true) {
+                          return 'Please enter your message';
+                        }
+                        return null;
+                      },
                     ),
-                    validator: (value) {
-  if (value?.isEmpty ?? true) {
-    return 'Please enter your message';
-  }
-  return null;
-},
-
-                  ),
-                  SizedBox(height: 16),
-                  ElevatedButton(
-                    onPressed: () {
-  if (_formKey.currentState?.validate() ?? false) {
-    // Handle form submission
-    _submitForm();
-  }
-},
-
-                    child: Text('Submit'),
-                  ),
-                ],
+                    SizedBox(height: 16),
+                    ElevatedButton(
+                      onPressed: () {
+                        if (_formKey.currentState?.validate() ?? false) {
+                          // Handle form submission
+                          _submitForm(context);
+                        }
+                      },
+                      child: Text('Submit'),
+                    ),
+                  ],
+                ),
               ),
             ),
             SizedBox(height: 16),
@@ -412,14 +506,14 @@ class ContactPage extends StatelessWidget {
               ),
             ),
             Text(
-              'Contact Phone Number: +1 123-456-7890',
+              'Contact Phone Number: +254 711 571 261',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 16,
               ),
             ),
             Text(
-              'Text Number: +1 987-654-3210',
+              'Text Number: +254 711 571 261',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 16,
@@ -427,13 +521,16 @@ class ContactPage extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () {
-                // Implement live chat functionality here
+                _launchLiveChat();
               },
               child: Text('Live Chat'),
             ),
             ElevatedButton(
               onPressed: () {
-                // Implement FAQ functionality here
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => FAQPage()),
+                );
               },
               child: Text('FAQ'),
             ),
@@ -443,18 +540,89 @@ class ContactPage extends StatelessWidget {
     );
   }
 
-  void _submitForm() {
-    // Here, you can implement the logic to send the form data
-    // via email, API, or any other preferred method.
-    // You can access the entered values using the text controllers.
-    // For example:
+  void _submitForm(BuildContext context) {
     final name = _nameController.text;
     final email = _emailController.text;
     final message = _messageController.text;
 
-    // Add your implementation logic here
+    // Replace the following code with your form submission logic
+    // For example, you can send the form data via email, API, or any other preferred method.
+    // You can also show a success message or error dialog based on the result.
+
+    if (name.isNotEmpty && email.isNotEmpty && message.isNotEmpty) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text('Form Submitted'),
+          content: Text('Thank you for submitting the form!'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text('OK'),
+            ),
+          ],
+        ),
+      );
+    } else {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text('Form Error'),
+          content: Text('Please fill in all the required fields.'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text('OK'),
+            ),
+          ],
+        ),
+      );
+    }
+  }
+
+  void _launchLiveChat() async {
+    const liveChatUrl = 'https://your-live-chat-url.com'; // Replace with your live chat URL
+
+    if (await canLaunch(liveChatUrl)) {
+      await launch(liveChatUrl);
+    } else {
+      throw 'Could not launch live chat URL';
+    }
   }
 }
+
+class FAQPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('FAQ'),
+      ),
+      body: Center(
+        child: Text('Frequently Asked Questions'),
+      ),
+    );
+  }
+}
+
+class Fashion extends StatelessWidget implements PreferredSizeWidget {
+  @override
+  Size get preferredSize => Size.fromHeight(kToolbarHeight);
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      title: Text('Fashion App'),
+      // Add your app menu actions or navigation icons here
+    );
+  }
+}
+
+
 
 
 class FashionStylingScreen extends StatefulWidget {
@@ -764,21 +932,105 @@ class Earphone {
   }
 
 class BlogPage extends StatelessWidget {
+  // Sample blog post data
+  final List<BlogPost> blogPosts = [
+    BlogPost(
+      title: 'First Blog Post',
+      author: 'John Doe',
+      date: 'June 1, 2023',
+      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam malesuada lorem ut est lacinia, a tempus ligula dignissim. Nam non odio ut odio tincidunt tincidunt non eu tortor.',
+    ),
+    BlogPost(
+      title: 'Second Blog Post',
+      author: 'Jane Smith',
+      date: 'June 5, 2023',
+      content: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
+    ),
+    BlogPost(
+      title: 'Third Blog Post',
+      author: 'Alex Johnson',
+      date: 'June 10, 2023',
+      content: 'Fusce et hendrerit turpis, in vestibulum est. Mauris aliquam facilisis tortor, vel sollicitudin sapien ultrices sed. Sed luctus risus non volutpat fermentum.',
+    ),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: FashionAppMenu(),
       body: Center(
-        child: Text(
-          'Blog',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 24,
-          ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'Blog',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 24,
+              ),
+            ),
+            SizedBox(height: 16),
+            Expanded(
+              child: ListView.builder(
+                itemCount: blogPosts.length,
+                itemBuilder: (context, index) {
+                  final blogPost = blogPosts[index];
+                  return Center(
+                    child: Padding(
+                      padding: EdgeInsets.all(16.0),
+                      child: Card(
+                        child: Padding(
+                          padding: EdgeInsets.all(16.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              Text(
+                                blogPost.title,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                ),
+                              ),
+                              SizedBox(height: 8),
+                              Text(
+                                'By ${blogPost.author} - ${blogPost.date}',
+                                style: TextStyle(
+                                  fontStyle: FontStyle.italic,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                              SizedBox(height: 16),
+                              Text(
+                                blogPost.content,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
         ),
       ),
     );
   }
+}
+
+class BlogPost {
+  final String title;
+  final String author;
+  final String date;
+  final String content;
+
+  BlogPost({
+    required this.title,
+    required this.author,
+    required this.date,
+    required this.content,
+  });
 }
 
 class BookNowPage extends StatelessWidget {
@@ -786,18 +1038,83 @@ class BookNowPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: FashionAppMenu(),
-      body: Center(
-        child: Text(
-          'Book Now',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 24,
-          ),
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'Book Now',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 24,
+              ),
+            ),
+            SizedBox(height: 20),
+            Text(
+              'Available Dates and Times:',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+              ),
+            ),
+            SizedBox(height: 10),
+            // Display the list of available dates and times here
+
+            SizedBox(height: 20),
+            Text(
+              'Pricing Information:',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+              ),
+            ),
+            SizedBox(height: 10),
+            // Display the pricing information here
+
+            SizedBox(height: 20),
+            Text(
+              'Personal Information:',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+              ),
+            ),
+            SizedBox(height: 10),
+            // Add form fields for clients to submit their personal information here
+
+            SizedBox(height: 20),
+            Text(
+              'Payment Method:',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+              ),
+            ),
+            SizedBox(height: 10),
+            // Add form fields for clients to submit their payment method here
+
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: _launchLiveChat,
+              child: Text('Live Chat'),
+            ),
+          ],
         ),
       ),
     );
   }
 }
+
+void _launchLiveChat() async {
+  const liveChatUrl = 'https://your-live-chat-url.com'; // Replace with your live chat URL
+
+  if (await canLaunch(liveChatUrl)) {
+    await launch(liveChatUrl);
+  } else {
+    throw 'Could not launch live chat URL';
+  }
+}
+
 
 class SignupPage extends StatelessWidget {
   @override
@@ -805,14 +1122,194 @@ class SignupPage extends StatelessWidget {
     return Scaffold(
       appBar: FashionAppMenu(),
       body: Center(
-        child: Text(
-          'Signup',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 24,
+        child: Container(
+          width: MediaQuery.of(context).size.width * 0.75,
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Signup',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 24,
+                  ),
+                ),
+                SizedBox(height: 24),
+                SignupForm(),
+                SizedBox(height: 16),
+                TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ForgotPasswordPage()),
+                    );
+                  },
+                  child: Text(
+                    'Forgot Password?',
+                    style: TextStyle(
+                      decoration: TextDecoration.underline,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 }
+
+class SignupForm extends StatefulWidget {
+  @override
+  _SignupFormState createState() => _SignupFormState();
+}
+
+class _SignupFormState extends State<SignupForm> {
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+      key: _formKey,
+      child: Column(
+        children: [
+          TextFormField(
+            controller: _nameController,
+            decoration: InputDecoration(
+              labelText: 'Name',
+            ),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter your name';
+              }
+              return null;
+            },
+          ),
+          SizedBox(height: 16),
+          TextFormField(
+            controller: _phoneController,
+            decoration: InputDecoration(
+              labelText: 'Phone Number',
+            ),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter your phone number';
+              }
+              return null;
+            },
+          ),
+          SizedBox(height: 16),
+          TextFormField(
+            controller: _emailController,
+            decoration: InputDecoration(
+              labelText: 'Email',
+            ),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter your email';
+              }
+              // You can add more email validation logic here if needed
+              return null;
+            },
+          ),
+          SizedBox(height: 16),
+          TextFormField(
+            controller: _passwordController,
+            decoration: InputDecoration(
+              labelText: 'Password',
+            ),
+            obscureText: true,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter your password';
+              }
+              // You can add more password validation logic here if needed
+              return null;
+            },
+          ),
+          SizedBox(height: 24),
+          ElevatedButton(
+            onPressed: () {
+              if (_formKey.currentState!.validate()) {
+                // Form is valid, perform signup action
+                String name = _nameController.text;
+                String phone = _phoneController.text;
+                String email = _emailController.text;
+                String password = _passwordController.text;
+                // Implement your signup logic here
+                // You can use Firebase Authentication or your preferred authentication mechanism
+              }
+            },
+            child: Text('Sign Up'),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class ForgotPasswordPage extends StatelessWidget {
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController _emailController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Forgot Password'),
+      ),
+      body: Center(
+        child: Container(
+          width: MediaQuery.of(context).size.width * 0.75,
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextFormField(
+                    controller: _emailController,
+                    decoration: InputDecoration(
+                      labelText: 'Email',
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your email';
+                      }
+                      // You can add more email validation logic here if needed
+                      return null;
+                    },
+                  ),
+                  SizedBox(height: 16),
+                  ElevatedButton(
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        // Form is valid, send password reset link to the provided email
+                        String email = _emailController.text;
+                        // Implement your password reset logic here
+                        // You can use Firebase Authentication or your preferred authentication mechanism
+                      }
+                    },
+                    child: Text('Reset Password'),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+
+
+
