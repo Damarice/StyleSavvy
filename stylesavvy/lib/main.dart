@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
 import 'dart:async';
+import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 void main() {
   runApp(FashionApp());
@@ -323,22 +324,138 @@ class AboutUsPage extends StatelessWidget {
 }
 
 class ContactPage extends StatelessWidget {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _messageController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: FashionAppMenu(),
-      body: Center(
-        child: Text(
-          'Contact',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 24,
-          ),
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            Text(
+              'Contact',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 24,
+              ),
+            ),
+            SizedBox(height: 16),
+            Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  TextFormField(
+                    controller: _nameController,
+                    decoration: InputDecoration(
+                      labelText: 'Name',
+                    ),
+                    validator: (value) {
+  if (value?.isEmpty ?? true) {
+    return 'Please enter your name';
+  }
+  return null;
+},
+
+                  ),
+                  TextFormField(
+                    controller: _emailController,
+                    decoration: InputDecoration(
+                      labelText: 'Email',
+                    ),
+                    validator: (value) {
+  if (value?.isEmpty ?? true) {
+    return 'Please enter your email';
+  }
+  return null;
+},
+
+                  ),
+                  TextFormField(
+                    controller: _messageController,
+                    maxLines: 5,
+                    decoration: InputDecoration(
+                      labelText: 'Message',
+                    ),
+                    validator: (value) {
+  if (value?.isEmpty ?? true) {
+    return 'Please enter your message';
+  }
+  return null;
+},
+
+                  ),
+                  SizedBox(height: 16),
+                  ElevatedButton(
+                    onPressed: () {
+  if (_formKey.currentState?.validate() ?? false) {
+    // Handle form submission
+    _submitForm();
+  }
+},
+
+                    child: Text('Submit'),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 16),
+            Text(
+              'Email: your-email@example.com',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
+            ),
+            Text(
+              'Contact Phone Number: +1 123-456-7890',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
+            ),
+            Text(
+              'Text Number: +1 987-654-3210',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                // Implement live chat functionality here
+              },
+              child: Text('Live Chat'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                // Implement FAQ functionality here
+              },
+              child: Text('FAQ'),
+            ),
+          ],
         ),
       ),
     );
   }
+
+  void _submitForm() {
+    // Here, you can implement the logic to send the form data
+    // via email, API, or any other preferred method.
+    // You can access the entered values using the text controllers.
+    // For example:
+    final name = _nameController.text;
+    final email = _emailController.text;
+    final message = _messageController.text;
+
+    // Add your implementation logic here
+  }
 }
+
 
 class FashionStylingScreen extends StatefulWidget {
   @override
