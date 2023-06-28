@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -609,6 +608,7 @@ class FAQPage extends StatelessWidget {
 }
 
 
+
 class FashionStylingScreen extends StatefulWidget {
   @override
   _FashionStylingScreenState createState() => _FashionStylingScreenState();
@@ -630,6 +630,24 @@ class _FashionStylingScreenState extends State<FashionStylingScreen> {
     },
     {
       'category': 'Evening Dinner',
+      'subcategories': [],
+      'image': 'assets/images/evening_dinner.png',
+      'description': 'Get inspired by evening dinner fashion styles',
+    },
+    {
+      'category': 'Wedding',
+      'subcategories': [],
+      'image': 'assets/images/evening_dinner.png',
+      'description': 'Get inspired by evening dinner fashion styles',
+    },
+    {
+      'category': 'Baby Shower',
+      'subcategories': [],
+      'image': 'assets/images/evening_dinner.png',
+      'description': 'Get inspired by evening dinner fashion styles',
+    },
+    {
+      'category': 'Graduation',
       'subcategories': [],
       'image': 'assets/images/evening_dinner.png',
       'description': 'Get inspired by evening dinner fashion styles',
@@ -711,17 +729,10 @@ class _FashionStylingScreenState extends State<FashionStylingScreen> {
       ),
     );
   }
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(IterableProperty<bool>('_isExpandedList', _isExpandedList));
-  }
 }
-  runApp(FashionApp()) {
-    // TODO: implement runApp
-    throw UnimplementedError();
-  }
 
+
+class Stylesavvy extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -736,6 +747,7 @@ class _FashionStylingScreenState extends State<FashionStylingScreen> {
       },
     );
   }
+}
 
 
 class BookNowScreen extends StatelessWidget {
