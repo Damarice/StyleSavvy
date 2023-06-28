@@ -1,6 +1,5 @@
 import 'dart:async';
-import 'package:flutter/material.dart';
-
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -609,21 +608,6 @@ class FAQPage extends StatelessWidget {
   }
 }
 
-class Fashion extends StatelessWidget implements PreferredSizeWidget {
-  @override
-  Size get preferredSize => Size.fromHeight(kToolbarHeight);
-
-  @override
-  Widget build(BuildContext context) {
-    return AppBar(
-      title: Text('Fashion App'),
-      // Add your app menu actions or navigation icons here
-    );
-  }
-}
-
-
-
 
 class FashionStylingScreen extends StatefulWidget {
   @override
@@ -635,18 +619,20 @@ class _FashionStylingScreenState extends State<FashionStylingScreen> {
     {
       'category': 'Official',
       'subcategories': [],
+      'image': 'assets/images/official.png',
+      'description': 'Explore official fashion styles',
     },
     {
       'category': 'Casual',
       'subcategories': [],
+      'image': 'assets/images/casual.png',
+      'description': 'Discover casual fashion styles',
     },
     {
       'category': 'Evening Dinner',
       'subcategories': [],
-    },
-    {
-      'category': 'Events',
-      'subcategories': ['Wedding', 'Baby Shower', 'Graduation'],
+      'image': 'assets/images/evening_dinner.png',
+      'description': 'Get inspired by evening dinner fashion styles',
     },
   ];
 
@@ -661,7 +647,17 @@ class _FashionStylingScreenState extends State<FashionStylingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: FashionAppMenu(),
+      appBar: AppBar(
+        title: Text('Fashion App'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.menu),
+            onPressed: () {
+              // TODO: Implement menu functionality
+            },
+          ),
+        ],
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -674,58 +670,87 @@ class _FashionStylingScreenState extends State<FashionStylingScreen> {
               ),
             ),
             SizedBox(height: 16),
-            ListView.builder(
-              shrinkWrap: true,
-              itemCount: categories.length,
-              itemBuilder: (context, index) {
-                final category = categories[index]['category'];
-                final subcategories = categories[index]['subcategories'];
-
-                return ExpansionPanelList(
-                  elevation: 1,
-                  expandedHeaderPadding: EdgeInsets.zero,
-                  expansionCallback: (panelIndex, isExpanded) {
-                    setState(() {
-                      _isExpandedList[index] = !isExpanded;
-                    });
-                  },
-                  children: [
-                    ExpansionPanel(
-                      headerBuilder: (context, isExpanded) {
-                        return ListTile(
-                          title: Text(
-                            category,
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        );
-                      },
-                      body: Column(
-                        children: List.generate(subcategories.length, (subIndex) {
-                          final subcategory = subcategories[subIndex];
-
-                          return ListTile(
-                            title: Text(subcategory),
-                            onTap: () {
-                              Navigator.pushNamed(context, '/category',
-                                  arguments: {'category': subcategory});
-                            },
-                          );
-                        }),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: List.generate(
+                categories.length,
+                (index) => Container(
+                  child: Column(
+                    children: [
+                      Image.asset(
+                        categories[index]['image'],
+                        height: 150,
+                        width: 150,
+                        fit: BoxFit.cover,
                       ),
-                      isExpanded: _isExpandedList[index],
-                    ),
-                  ],
-                );
-              },
+                      SizedBox(height: 8),
+                      Text(
+                        categories[index]['category'],
+                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                      ),
+                      SizedBox(height: 8),
+                      Text(
+                        categories[index]['description'],
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 14),
+                      ),
+                      SizedBox(height: 16),
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/book-now');
+                        },
+                        child: Text('Book Now'),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ),
           ],
         ),
       ),
     );
   }
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(IterableProperty<bool>('_isExpandedList', _isExpandedList));
+  }
 }
+  runApp(FashionApp()) {
+    // TODO: implement runApp
+    throw UnimplementedError();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Fashion App',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => FashionStylingScreen(),
+        '/book-now': (context) => BookNowScreen(),
+      },
+    );
+  }
 
 
+class BookNowScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Book Now'),
+      ),
+      body: Center(
+        child: Text('Book Now Screen'),
+      ),
+    );
+  }
+}
 
 class ShoppingScreen extends StatelessWidget {
   @override
