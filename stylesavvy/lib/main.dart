@@ -607,8 +607,6 @@ class FAQPage extends StatelessWidget {
   }
 }
 
-
-
 class FashionStylingScreen extends StatefulWidget {
   @override
   _FashionStylingScreenState createState() => _FashionStylingScreenState();
@@ -637,30 +635,22 @@ class _FashionStylingScreenState extends State<FashionStylingScreen> {
     {
       'category': 'Wedding',
       'subcategories': [],
-      'image': 'assets/images/evening_dinner.png',
-      'description': 'Get inspired by evening dinner fashion styles',
+      'image': 'assets/images/wedding.png',
+      'description': 'Find elegant wedding fashion styles',
     },
     {
       'category': 'Baby Shower',
       'subcategories': [],
-      'image': 'assets/images/evening_dinner.png',
-      'description': 'Get inspired by evening dinner fashion styles',
+      'image': 'assets/images/baby_shower.png',
+      'description': 'Celebrate with stylish baby shower fashion',
     },
     {
       'category': 'Graduation',
       'subcategories': [],
-      'image': 'assets/images/evening_dinner.png',
-      'description': 'Get inspired by evening dinner fashion styles',
+      'image': 'assets/images/graduation.png',
+      'description': 'Dress up for graduation day',
     },
   ];
-
-  List<bool> _isExpandedList = [];
-
-  @override
-  void initState() {
-    super.initState();
-    _isExpandedList = List<bool>.filled(categories.length, false);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -688,40 +678,46 @@ class _FashionStylingScreenState extends State<FashionStylingScreen> {
               ),
             ),
             SizedBox(height: 16),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: List.generate(
-                categories.length,
-                (index) => Container(
-                  child: Column(
-                    children: [
-                      Image.asset(
-                        categories[index]['image'],
-                        height: 150,
-                        width: 150,
-                        fit: BoxFit.cover,
-                      ),
-                      SizedBox(height: 8),
-                      Text(
-                        categories[index]['category'],
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                      ),
-                      SizedBox(height: 8),
-                      Text(
-                        categories[index]['description'],
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 14),
-                      ),
-                      SizedBox(height: 16),
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/book-now');
-                        },
-                        child: Text('Book Now'),
-                      ),
-                    ],
-                  ),
+            Expanded(
+              child: GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  childAspectRatio: 1.0,
                 ),
+                itemCount: categories.length,
+                itemBuilder: (context, index) {
+                  return Container(
+                    padding: EdgeInsets.all(8),
+                    child: Column(
+                      children: [
+                        Image.asset(
+                          categories[index]['image'],
+                          height: 150,
+                          width: 150,
+                          fit: BoxFit.cover,
+                        ),
+                        SizedBox(height: 8),
+                        Text(
+                          categories[index]['category'],
+                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                        ),
+                        SizedBox(height: 8),
+                        Text(
+                          categories[index]['description'],
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: 14),
+                        ),
+                        SizedBox(height: 16),
+                        ElevatedButton(
+                          onPressed: () {
+                            Navigator.pushNamed(context, '/book-now');
+                          },
+                          child: Text('Book Now'),
+                        ),
+                      ],
+                    ),
+                  );
+                },
               ),
             ),
           ],
@@ -748,7 +744,6 @@ class Stylesavvy extends StatelessWidget {
     );
   }
 }
-
 
 class BookNowScreen extends StatelessWidget {
   @override
