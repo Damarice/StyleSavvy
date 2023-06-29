@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+
 import 'FashionAppMenu.dart';
 class BlogPage extends StatelessWidget {
   // Sample blog post data
