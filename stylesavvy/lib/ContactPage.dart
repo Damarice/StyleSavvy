@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'FashionAppMenu.dart';
+
 class ContactPage extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
@@ -16,6 +17,7 @@ class ContactPage extends StatelessWidget {
         padding: EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
               'Contact',
@@ -23,93 +25,98 @@ class ContactPage extends StatelessWidget {
                 fontWeight: FontWeight.bold,
                 fontSize: 24,
               ),
+              textAlign: TextAlign.center,
             ),
             SizedBox(height: 16),
-            FractionallySizedBox(
-              widthFactor: 0.75,
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  children: [
-                    TextFormField(
-                      controller: _nameController,
-                      decoration: InputDecoration(
-                        labelText: 'Name',
-                      ),
-                      validator: (value) {
-                        if (value?.isEmpty ?? true) {
-                          return 'Please enter your name';
-                        }
-                        return null;
-                      },
+            Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  TextFormField(
+                    controller: _nameController,
+                    decoration: InputDecoration(
+                      labelText: 'Name',
                     ),
-                    TextFormField(
-                      controller: _emailController,
-                      decoration: InputDecoration(
-                        labelText: 'Email',
-                      ),
-                      validator: (value) {
-                        if (value?.isEmpty ?? true) {
-                          return 'Please enter your email';
-                        }
-                        return null;
-                      },
+                    validator: (value) {
+                      if (value?.isEmpty ?? true) {
+                        return 'Please enter your name';
+                      }
+                      return null;
+                    },
+                  ),
+                  TextFormField(
+                    controller: _emailController,
+                    decoration: InputDecoration(
+                      labelText: 'Email',
                     ),
-                    TextFormField(
-                      controller: _messageController,
-                      maxLines: 5,
-                      decoration: InputDecoration(
-                        labelText: 'Message',
-                      ),
-                      validator: (value) {
-                        if (value?.isEmpty ?? true) {
-                          return 'Please enter your message';
-                        }
-                        return null;
-                      },
+                    validator: (value) {
+                      if (value?.isEmpty ?? true) {
+                        return 'Please enter your email';
+                      }
+                      return null;
+                    },
+                  ),
+                  TextFormField(
+                    controller: _messageController,
+                    maxLines: 5,
+                    decoration: InputDecoration(
+                      labelText: 'Message',
                     ),
-                    SizedBox(height: 16),
-                    ElevatedButton(
-                      onPressed: () {
-                        if (_formKey.currentState?.validate() ?? false) {
-                          // Handle form submission
-                          _submitForm(context);
-                        }
-                      },
-                      child: Text('Submit'),
-                    ),
-                  ],
-                ),
+                    validator: (value) {
+                      if (value?.isEmpty ?? true) {
+                        return 'Please enter your message';
+                      }
+                      return null;
+                    },
+                  ),
+                  SizedBox(height: 16),
+                  ElevatedButton(
+                    onPressed: () {
+                      if (_formKey.currentState?.validate() ?? false) {
+                        _submitForm(context);
+                      }
+                    },
+                    child: Text('Submit'),
+                  ),
+                ],
               ),
             ),
             SizedBox(height: 16),
-            Text(
-              'Email: your-email@example.com',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
+            Center(
+              child: Column(
+                children: [
+                  Text(
+                    'Email: your-email@example.com',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  ),
+                  Text(
+                    'Contact Phone Number: +254 711 571 261',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  ),
+                  Text(
+                    'Text Number: +254 711 571 261',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  ),
+                ],
               ),
             ),
-            Text(
-              'Contact Phone Number: +254 711 571 261',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
-              ),
-            ),
-            Text(
-              'Text Number: +254 711 571 261',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
-              ),
-            ),
+            SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
                 _launchLiveChat();
               },
               child: Text('Live Chat'),
             ),
+            SizedBox(height: 8),
             ElevatedButton(
               onPressed: () {
                 Navigator.push(
@@ -129,10 +136,6 @@ class ContactPage extends StatelessWidget {
     final name = _nameController.text;
     final email = _emailController.text;
     final message = _messageController.text;
-
-    // Replace the following code with your form submission logic
-    // For example, you can send the form data via email, API, or any other preferred method.
-    // You can also show a success message or error dialog based on the result.
 
     if (name.isNotEmpty && email.isNotEmpty && message.isNotEmpty) {
       showDialog(
