@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
-
+import 'package:flutter/material.dart';
 
 import 'AboutUsPage.dart';
 import 'BlogPage.dart';
@@ -12,13 +12,13 @@ import 'HomePage.dart';
 import 'ShoppingScreen.dart';
 import 'SignupPage.dart';
 
-
-
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(FashionApp());
 }
 
 class FashionApp extends StatelessWidget {
+  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
