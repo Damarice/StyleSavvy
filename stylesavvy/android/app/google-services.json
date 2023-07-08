@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "89347303550",
+    "project_id": "stylesavvy-64d65",
+    "storage_bucket": "stylesavvy-64d65.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:89347303550:android:94570df49293138e38502f",
+        "android_client_info": {
+          "package_name": "com.example.stylesavvy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "89347303550-sl08510kj8s5fubfn2m7jps2t8qkotme.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDyPHX2CyimFuVJmFTTQiuWl1NNi-2Dp30"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "89347303550-sl08510kj8s5fubfn2m7jps2t8qkotme.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "89347303550-8tnbl39fc10je49im4brd371q1h49c2p.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.stylesavvy.RunnerTests"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
